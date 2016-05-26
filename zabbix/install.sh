@@ -123,6 +123,17 @@ ExternalScripts=/usr/lib/zabbix/externalscripts
 LogSlowQueries=3000
 eof
 
+cp /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bk
+cat > /etc/zabbix/zabbix_agentd.conf <<eof
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=0
+Server=127.0.0.1
+ServerActive=127.0.0.1
+Hostname=$(hostname)
+Include=/etc/zabbix/zabbix_agentd.d/
+eof
+
 cat > /etc/httpd/conf.d/zabbix.conf <<eof
 #
 # Zabbix monitoring system php web frontend
