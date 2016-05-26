@@ -2,7 +2,7 @@
 #Install Zabbix 3.0 On Centos 6
 check_id()
 {
-	if [ $(id -i) -ne 0 ]
+	if [ $(id -u) -ne 0 ]
 	then
 		echo 'Error: User is not root. Please login root'
 		exit 1
