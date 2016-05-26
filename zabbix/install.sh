@@ -188,6 +188,8 @@ eof
 
 configure_firewall()
 {
+	setenforce 0
+	edit_line 7 'enforcing' 'permissive' /etc/selinux/config 
 	iptables -P INPUT ACCEPT
 	iptables -P OUTPUT ACCEPT
 	iptables -P FORWARD DROP
@@ -221,6 +223,7 @@ start_service()
 main()
 {
 	clear
+	check_id
 	install_base_package
 	password_msql=$(random_pass)
 	password_sql_zabbix=$(random_pass)
@@ -230,6 +233,7 @@ main()
 	configure_zabbix $password_msql $password_sql_zabbix
 	configure_firewall
 	start_service
+	clear
 	echo "ROOT DATABASE: $password_msql" > ~/.password
 	echo "USER ZABBIX: $password_sql_zabbix" >> ~/.password
 	echo 'Install Success Full'
